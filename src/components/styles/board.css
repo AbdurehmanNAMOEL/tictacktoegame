@@ -1,0 +1,9 @@
+.board-container{
+    width: 280px;
+    height: 280px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 5px;
+    place-items: center;
+}

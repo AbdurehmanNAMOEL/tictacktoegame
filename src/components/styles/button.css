@@ -1,0 +1,22 @@
+.btn-container{
+    width: 80px;
+    height: 80px;
+    background: rgba(13, 194, 240, 0.70);
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+.btn-container:hover{
+    background-color: rgb(13, 194, 240);
+}
+.image{
+    width: 50%;
+    height: 50%;
+}
