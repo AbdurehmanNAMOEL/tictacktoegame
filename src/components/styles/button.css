@@ -1,7 +1,7 @@
 .btn-container{
-    width: 80px;
-    height: 80px;
-    background: rgba(13, 194, 240, 0.70);
+    width: 100px;
+    height: 100px;
+    background: #121212;
     display: flex;
     justify-content: center;
     align-items:center;
@@ -11,7 +11,7 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     cursor: pointer;
-    border: none;
+    border: solid rgb(0, 132, 255) 2px;
 }
 .btn-container:hover{
     background-color: rgb(13, 194, 240);
@@ -19,4 +19,7 @@
 .image{
     width: 50%;
     height: 50%;
+}
+h1{
+    font-size: 50px;
 }

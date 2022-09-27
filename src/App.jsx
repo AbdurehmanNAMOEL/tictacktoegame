@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './app.css'
 import Board from './components/Board'
+
 const App = () => {
+   const [isThereWinner,setWinner]=useState(false)
+   
   return (
     <div className='app'>
-        <Board/>
+        <Board isThereWinner={isThereWinner} setWinner={setWinner}/>
+     
     </div>
   )
 }

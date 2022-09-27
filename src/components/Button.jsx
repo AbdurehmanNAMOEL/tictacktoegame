@@ -38,8 +38,8 @@ let initialValue='0'
 let indexValue =[]
 let previousValue ='1'
 
-const Button = ({list,array}) => {
-    let imageContainer =[X,O]
+const Button = ({list,array,setWinner,isThereWinner}) => {
+    let imageContainer =["X","o"]
 
     const buttonImage =imageContainer[parseInt(Math.random()*2)]
  
@@ -79,10 +79,6 @@ const Button = ({list,array}) => {
  indexValue.push(list)   
  indexValue.sort()    
 }
-
-const [isThereWinner,setWinner] = useState(false)
-
-
 
 const boardCreator=()=>{
 
@@ -158,6 +154,7 @@ const blockOne = (horizontalArray,index)=>{
                       
                 }
             }
+
        
      winnerChecker(horizontal1,horizontalT1)
         
@@ -258,8 +255,27 @@ useEffect(()=>{
   
  
     if(isThereWinner){
-        alert('we have A winner')
+     
+       setImage('')
+       horizontal1=[]
+       horizontalT1=[]
+       horizontal2=[]
+       horizontalT2=[]
+       horizontal3=[]
+       horizontalT3=[]
+       vertical1=[]
+       verticalV1=[]
+       vertical2=[]
+       verticalV2=[]
+       vertical3=[]
+       verticalV3=[]
+       diagonal1=[]
+       diagonal2=[]
+       diagonalD1=[]
+       diagonalD2=[]
+       
     }
+  console.log(isThereWinner)
 
 },[isThereWinner])
 
@@ -269,14 +285,19 @@ useEffect(()=>{
 const winnerChecker = (blockArray,testArray)=>{
        
         if(blockArray.length === 3){
-            
+          
             for(let i=0;i<blockArray.length;i++){
             
                 testArray.push(blockArray[i].split(' ')[1])
+                
             } 
             if(testArray[0] === testArray[1] && testArray[1] === testArray[2]){
-               setWinner(true)
+                
+            setWinner(true)
+            testArray=[]
           }
+
+          console.log(testArray);
         }                 
 }
 
@@ -284,7 +305,7 @@ const winnerChecker = (blockArray,testArray)=>{
   return (
     
     <button onClick={handleWinner} className='btn-container' list={list} disabled={Image} value={Image}>
-        {Image?<img src={Image} alt="" className='image' />:''}
+        {Image?<h1 style={{color:`${Image==="X"?'red':'white'}`}}>{Image}</h1>:''}
     </button>
   )
 }

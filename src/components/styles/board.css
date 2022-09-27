@@ -1,7 +1,9 @@
 .board-container{
-    width: 280px;
-    height: 280px;
-    background-color: white;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    z-index: 50;
+    background-color: #0a0b1f;
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 5px;
