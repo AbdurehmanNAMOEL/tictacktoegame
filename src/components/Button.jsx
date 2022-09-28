@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import './styles/button.css'
 import { useEffect } from 'react'
+
 let count = 0
 let vertical=[]
 let horizontal1=[]
@@ -15,11 +16,6 @@ let vertical3=[]
 let diagonal1=[]
 let diagonal2=[]
 
-
-
-
-
-
 let horizontalT1=[]
 let horizontalT2=[]
 let horizontalT3=[]
@@ -30,7 +26,6 @@ let verticalV3=[]
 
 let diagonalD1=[]
 let diagonalD2=[]
-
 
 let initialValue='0'
 
@@ -67,7 +62,7 @@ const setFirstMove=()=>{
 const setTheNextMove=()=>{
 
     if(count%2===0){  
-            
+      
         setImage(imageContainer[0])
         initialValue=imageContainer[0] 
     }else{
@@ -85,8 +80,10 @@ const boardCreator=()=>{
  array.push({ "index":`${list} ${initialValue}`})
  vertical = array.map(item=>item.index).sort()
  setUserInput() 
-   
+   console.log(array);
 }
+
+
 
 const setUserInput=()=>{
  
@@ -109,8 +106,6 @@ const setUserInput=()=>{
   
 }
 
-
-
 const setBoardValue=(blockArray,newArray,index)=>{
     
     if(!blockArray.includes(vertical[index])){               
@@ -122,7 +117,6 @@ const setBoardValue=(blockArray,newArray,index)=>{
 }
 
 
-
 const blockFour=(index)=>{
     if(vertical[index].split(' ')[0]%3===0){
       if(!vertical1.includes(vertical[index])){
@@ -131,8 +125,6 @@ const blockFour=(index)=>{
     }
     winnerChecker(vertical1,verticalV1)
 }
-
-
 
 
 const blockOne = (horizontalArray,index)=>{
@@ -238,7 +230,8 @@ useEffect(()=>{
        diagonalD1=[]
        diagonalD2=[]
        
-    }if(!isThereWinner && array.length===9){
+    }
+    if(!isThereWinner && array.length===9){
         alert('there is no winner')
     }
 
@@ -257,12 +250,10 @@ const winnerChecker = (blockArray,testArray)=>{
                 
             } 
             
-            if(testArray[0] === testArray[1] && testArray[1] === testArray[2]){    
+        if(testArray[0] === testArray[1] && testArray[1] === testArray[2]){    
             setWinner(true)
             testArray=[]
           }
-
-          console.log(testArray);
         }                 
 }
 
