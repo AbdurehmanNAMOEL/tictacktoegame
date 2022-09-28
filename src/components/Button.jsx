@@ -274,10 +274,12 @@ useEffect(()=>{
        diagonalD1=[]
        diagonalD2=[]
        
+    }if(!isThereWinner && array.length===9){
+        alert('there is no winner')
     }
   console.log(isThereWinner)
 
-},[isThereWinner])
+},[isThereWinner,array])
 
 
 
