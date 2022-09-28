@@ -1,7 +1,5 @@
 import React from 'react'
 import { useState } from 'react'
-import X from '../images/x.png'
-import O from '../images/o.png'
 import './styles/button.css'
 import { useEffect } from 'react'
 let count = 0
@@ -35,56 +33,65 @@ let diagonalD2=[]
 
 
 let initialValue='0'
-let indexValue =[]
-let previousValue ='1'
+
 
 const Button = ({list,array,setWinner,isThereWinner}) => {
     let imageContainer =["X","o"]
-
-    const buttonImage =imageContainer[parseInt(Math.random()*2)]
- 
     const [Image,setImage]= useState('')
     
-     const handleWinner=()=>{
-
-        if(count>0){    
-        if(count%2===0){ 
-            previousValue= initialValue
-            setImage(imageContainer[0])
-            initialValue=imageContainer[0]
-            count+=1
-             
-        }else{
-             previousValue= initialValue
-            setImage(imageContainer[1])
-            initialValue=imageContainer[1]
-            count+=1
-             
-        }
-        }else if(count===0) {
-            setImage(buttonImage)
-            if(buttonImage===imageContainer[0]){
-                count=1
-                initialValue=buttonImage
-
-            }else {
-               count=2
-                initialValue=buttonImage       
-            }
-            
-        } 
-
-        boardCreator()
-
- indexValue.push(list)   
- indexValue.sort()    
+    const setImageToBlock=()=>{
+    
+    if(count>0) setTheNextMove()
+    else setFirstMove()
+    
+  boardCreator()
 }
 
-const boardCreator=()=>{
 
-    array.push({ "index":`${list} ${initialValue}`})
-    vertical = array.map(item=>item.index).sort()
-    for(let i =0; i<vertical.length;i++){
+const handleWinner=()=>{
+
+   setImageToBlock()
+ 
+}
+
+const setFirstMove=()=>{
+
+    setImage(imageContainer[parseInt(Math.random()*2)])
+    if(imageContainer[parseInt(Math.random()*2)]===imageContainer[0]) count=1
+    else count=2
+    initialValue=imageContainer[parseInt(Math.random()*2)]
+            
+    
+}
+
+const setTheNextMove=()=>{
+
+    if(count%2===0){  
+            
+        setImage(imageContainer[0])
+        initialValue=imageContainer[0] 
+    }else{
+           
+        setImage(imageContainer[1])
+        initialValue=imageContainer[1]
+        
+    }
+    count++
+}
+
+
+
+const boardCreator=()=>{
+ array.push({ "index":`${list} ${initialValue}`})
+ vertical = array.map(item=>item.index).sort()
+ setUserInput() 
+   
+}
+
+const setUserInput=()=>{
+ 
+ 
+   for(let i =0; i<vertical.length;i++){
           
         if(parseInt(vertical[i].split(' ')[0])<=2){
             blockOne(horizontal1,i)  
@@ -99,9 +106,20 @@ const boardCreator=()=>{
     }
 
     winnerChecker(horizontal1,horizontalT1)
-   
+  
 }
 
+
+
+const setBoardValue=(blockArray,newArray,index)=>{
+    
+    if(!blockArray.includes(vertical[index])){               
+        blockArray.push(vertical[index])
+        winnerChecker(blockArray,newArray)
+                            
+    }
+
+}
 
 
 
@@ -117,7 +135,6 @@ const blockFour=(index)=>{
 
 
 
-
 const blockOne = (horizontalArray,index)=>{
     
       if(!horizontalArray.includes(vertical[index])){
@@ -125,44 +142,23 @@ const blockOne = (horizontalArray,index)=>{
           
           if(parseInt(vertical[index].split(' ')[0]) === 0){
                        
-                if(!diagonal1.includes(vertical[index])){
-                     
-                      diagonal1.push(vertical[index])
-                      winnerChecker(diagonal1,diagonal1)
-                }
+                setBoardValue(diagonal1,diagonalD1,index)
                 
             }else if (parseInt(vertical[index].split(' ')[0]) === 1){
                    
-          
-                 if(!vertical2.includes(vertical[index])){
-                      vertical2.push(vertical[index])
-                       winnerChecker(vertical2,verticalV2)
-                      
-                }
+                setBoardValue(vertical2,verticalV2,index)
         
             }else if (parseInt(vertical[index].split(' ')[0]) === 2){
                    
-                if(!diagonal2.includes(vertical[index])){
-                     
-                      diagonal2.push(vertical[index])
-                      winnerChecker(diagonal2,diagonalD2)
-                }
-                 
-                if(!vertical3.includes(vertical[index])){
-                      vertical3.push(vertical[index])
-                       winnerChecker(vertical3,verticalV3)
-                      
-                }
+                setBoardValue(diagonal2,diagonalD1,index)
+                setBoardValue(vertical3,verticalV3,index)
             }
 
        
      winnerChecker(horizontal1,horizontalT1)
         
-    }
-         
-    
+    }   
 }
-
 
 
 const blockTwo=(horizontalArray,index)=>{
@@ -173,31 +169,14 @@ const blockTwo=(horizontalArray,index)=>{
           
                  
             if (parseInt(vertical[index].split(' ')[0]) === 4){
-                   
-                if(!diagonal1.includes(vertical[index])){
-                     
-                      diagonal1.push(vertical[index])
-                      winnerChecker(diagonal1,diagonalD1)
-                }
-
-                if(!vertical2.includes(vertical[index])){
-                      vertical2.push(vertical[index])
-                       winnerChecker(vertical2,verticalV2)
-                }
-
-                if(!diagonal2.includes(vertical[index])){
-                      diagonal2.push(vertical[index])
-                       winnerChecker(diagonal2,diagonalD2)
-                      
-                }
+                  
+                setBoardValue(diagonal1,diagonalD1,index)
+                setBoardValue(vertical2,verticalV2,index) 
+                setBoardValue(diagonal2,diagonalD2,index)
 
             }else if (parseInt(vertical[index].split(' ')[0]) === 5){
-                   
-                if(!vertical3.includes(vertical[index])){
-                     vertical3.push(vertical[index])
-                     winnerChecker(vertical3,verticalV3)
-  
-                }
+
+                setBoardValue(vertical3,verticalV3,index)
             }
 
       winnerChecker(horizontal2,horizontalT2)
@@ -214,33 +193,18 @@ const blockThree=(horizontalArray,index)=>{
              horizontalArray.push(vertical[index])
                      
             if(parseInt(vertical[index].split(' ')[0]) === 6){
-                       
-               if(!diagonal2.includes(vertical[index])){         
-                      diagonal2.push(vertical[index])
-                      winnerChecker(diagonal2,diagonalD2)
-                }
+                    
+                setBoardValue(diagonal2,diagonalD2,index)
                 
             }else if (parseInt(vertical[index].split(' ')[0]) === 7){
-                   
-                    if(!vertical2.includes(vertical[index])){
-                     vertical2.push(vertical[index])
-                     winnerChecker(vertical2,verticalV2)
-                
-                    }
+                    
+                setBoardValue(vertical2,verticalV2,index)
             
             }else if (parseInt(vertical[index].split(' ')[0]) === 8){
                 
-                if(!diagonal1.includes(vertical[index])){
-                     
-                      diagonal1.push(vertical[index])
-                      winnerChecker(diagonal1,diagonalD1)
-                }
+                 setBoardValue(diagonal1,diagonalD1,index)
                    
-                if(!vertical3.includes(vertical[index])){
-                      vertical3.push(vertical[index])
-                       winnerChecker(vertical3,verticalV3)
-                      
-                }
+                 setBoardValue(vertical3,verticalV3,index)
 
             }
    
@@ -277,7 +241,6 @@ useEffect(()=>{
     }if(!isThereWinner && array.length===9){
         alert('there is no winner')
     }
-  console.log(isThereWinner)
 
 },[isThereWinner,array])
 
@@ -293,8 +256,8 @@ const winnerChecker = (blockArray,testArray)=>{
                 testArray.push(blockArray[i].split(' ')[1])
                 
             } 
-            if(testArray[0] === testArray[1] && testArray[1] === testArray[2]){
-                
+            
+            if(testArray[0] === testArray[1] && testArray[1] === testArray[2]){    
             setWinner(true)
             testArray=[]
           }
